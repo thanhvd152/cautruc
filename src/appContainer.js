@@ -4,60 +4,50 @@ import {
     Platform,
     StyleSheet,
     Text,
-    View
+    View,
+    AsyncStorage
 } from 'react-native';
+import { Root } from 'native-base'
 import { StackNavigator } from 'react-navigation'
 import Home from './container/home';
 import Login from './container/login';
+import Loading from './UI/loading';
+import Messagebox from './UI/messagebox'
 import api from './api';
 
-const AppUI = StackNavigator({
-    home1: {
-        screen: Home
-    },
-    login: {
-        screen: Login
-    },
-}, {
-        headerMode: 'none',
-        mode: 'modal',
-        cardStyle: {
-            backgroundColor: 'rgba(0,0,0,0.3)',
-            opacity: 1,
+const AppScreen = (isLogin) => {
+    return StackNavigator({
+        login: {
+            screen: Login
         },
-    })
-
-const AppScreen = StackNavigator({
-    login: {
-        screen: Login
-    },
-    home: {
-        screen: Home
-    },
-}, {
-        headerMode: 'none',
-    })
-
-
-const Main = StackNavigator({
-    screenapp: {
-        screen: props => <AppScreen setNavigationProps={api.setNavigationState(props.navigation)} />
-    },
-    ui: {
-        screen: AppUI
-    },
-
-}, {
-        headerMode: 'none',
-        cardStyle: {
-            backgroundColor: 'transparent',
-            opacity: 1,
+        home: {
+            screen: Home
         },
-    })
+        /////UI component //////////
+        message: {
+            screen: Messagebox
+        },
+        loading: {
+            screen: Loading
+        },
+    }, {
+            headerMode: 'none',
+            initialRouteName: isLogin ? 'home' : 'login',
+            mode: 'modal',
+            cardStyle: {
+                backgroundColor: 'transparent',
+                opacity: 1,
+            },
+        })
+}
+
 
 export default class AppContainer extends Component {
+
     render() {
-        return <Main />
+        const Layout = AppScreen(false);
+        return <Layout />
+
     }
 }
 

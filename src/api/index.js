@@ -1,6 +1,9 @@
 import { NavigationActions } from 'react-navigation';
+import { Dimensions } from 'react-native'
 let store = null
 let navigationState = null
+var deviceWidth = Dimensions.get('window').width
+var deviceHeight = Dimensions.get('window').height
 const api = {
     setStore: (newStore) => {
         store = newStore
@@ -14,34 +17,40 @@ const api = {
     setToken: (token) => {
         store.dispatch({ type: 'SET_TOKEN', token })
     },
-    push: (routeName, params, action) => {
+    navigate: (routeName, params, action) => {
         navigationState.dispatch(
-            NavigationActions.push({
+            NavigationActions.navigate({
                 routeName,
                 params,
                 action: action,
             })
         )
     },
-    reset: (index, actions) => {
+    showLoading: () => {
         navigationState.dispatch(
-            NavigationActions.reset({
-                index,
-                actions
+            NavigationActions.navigate({
+                routeName: 'loading',
             })
         )
     },
-    reset: (key) => {
+    showMessage: (content, title) => {
         navigationState.dispatch(
-            NavigationActions.back({
-                key
+            NavigationActions.navigate({
+                routeName: 'message',
+                params: { content, title }
+            })
+        )
+    },
+    reset: (index, route) => {
+        navigationState.dispatch(
+            NavigationActions.reset({
+                index: index,
+                actions: [NavigationActions.navigate({ routeName: route })],
             })
         )
     },
     pop: () => {
-        navigationState.dispatch(
-            NavigationActions.pop()
-        )
+        navigationState.pop()
     },
     replace: () => {
         navigationState.dispatch(
@@ -53,7 +62,13 @@ const api = {
                 action
             })
         )
-    }
+    },
+    getRealDeviceHeight: () => {
+        return deviceHeight
+    },
+    getRealDeviceWidth: () => {
+        return deviceWidth
+    },
 }
 
 export default api;

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "755258343496",
+    "firebase_url": "https://giatky-19cb2.firebaseio.com",
+    "project_id": "giatky-19cb2",
+    "storage_bucket": "giatky-19cb2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755258343496:android:d02d13072dbd6088",
+        "android_client_info": {
+          "package_name": "com.giatky"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755258343496-65f65pulqk0k31f57ij7qb18ncm8qu52.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.giatky",
+            "certificate_hash": "86daa99388fa5271698c87617edb075564b30f3b"
+          }
+        },
+        {
+          "client_id": "755258343496-3usm483m92g81ciocsiafhdmds7tj9sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI7K9stxs7hFB_W7GwPoX5jywMVbw6SBE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755258343496-3usm483m92g81ciocsiafhdmds7tj9sm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
