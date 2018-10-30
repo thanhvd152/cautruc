@@ -100,6 +100,7 @@ android {
     defaultConfig {
         applicationId "com.giatky"
         minSdkVersion 16
+        vectorDrawables.useSupportLibrary = true
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -137,6 +138,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-image-crop-picker')
     compile project(':react-native-fcm')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"

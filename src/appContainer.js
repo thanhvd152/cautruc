@@ -13,6 +13,7 @@ import Home from './container/home';
 import Login from './container/login';
 import Loading from './UI/loading';
 import Messagebox from './UI/messagebox'
+import SignUp from './container/signUp'
 import api from './api';
 
 const AppScreen = (isLogin) => {
@@ -22,6 +23,9 @@ const AppScreen = (isLogin) => {
         },
         home: {
             screen: Home
+        },
+        signup: {
+            screen: SignUp
         },
         /////UI component //////////
         message: {

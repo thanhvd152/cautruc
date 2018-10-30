@@ -3,6 +3,8 @@ import { Toast, Container, Header, Content, Thumbnail, Form, Item, Input, Label,
 import { ImageBackground, StatusBar, Image, TouchableOpacity, ScrollView } from 'react-native'
 import api from '../api';
 import { Color } from '../themes/color'
+import dataService from '../network/dataService';
+
 export default class Login extends Component {
     constructor(props) {
         super(props)
@@ -15,14 +17,31 @@ export default class Login extends Component {
 
     componentDidMount() {
 
-
     }
 
-    login() {
-        api.showMessage('Vui lòng nhập email')
+
+
+    async login() {
+        if (this.state.userName.length == 0) return api.showMessage('Vui lòng nhập email')
+        if (this.state.pass.length == 0) return api.showMessage('Vui lòng nhập mật khẩu')
         api.showLoading()
-        // if (this.state.userName.length == 0) return api.showMessage('Vui lòng nhập email')
-        // if (this.state.pass.length == 0) return api.showMessage('Vui lòng nhập mật khẩu')
+        let result = await dataService.signIn('public', this.state.userName, this.state.pass)
+        api.pop()
+        if (result) {
+            if (result.loginInfo.roleId.includes(2)) {
+                api.setToken(result.token)
+                api.setUserInfo(result.loginInfo)
+                api.reset(0, 'home')
+            } else {
+                api.showMessage('Bạn không có quyền truy cập')
+            }
+
+        } else {
+            this.setState({
+                userName: '',
+                pass: ''
+            })
+        }
     }
 
     render() {
@@ -39,7 +58,7 @@ export default class Login extends Component {
                     <ScrollView
                         style={{ flex: 1 }}
                         showsVerticalScrollIndicator={false}
-
+                        keyboardShouldPersistTaps='always'
                     >
 
                         <Image style={{
@@ -92,10 +111,9 @@ export default class Login extends Component {
                             <Button
                                 onPress={() => { this.login() }}
                                 block light style={{ backgroundColor: '#fff', borderRadius: 25, height: 50, marginTop: 15 }}>
-                                <Text style={{ color: Color.colorSuccess, fontWeight: 'bold', }}>Đăng nhập</Text>
+                                <Text style={{ color: Color.colorSuccess, fontWeight: 'bold', backgroundColor: 'transparent' }}>Đăng nhập</Text>
                             </Button>
-                            <Text style={{ alignSelf: 'center', marginTop: 10, color: '#fff' }} >Quên mật khẩu ?</Text>
-                            <Text style={{ alignSelf: 'center', marginTop: 10, color: '#fff' }} >Bạn chưa có tài khoản ? Vui lòng <Text style={{ color: '#fff', fontWeight: 'bold', textDecorationLine: 'underline' }}>ĐĂNG KÝ</Text> </Text>
+                            <Text style={{ alignSelf: 'center', marginTop: 10, color: '#fff', backgroundColor: 'transparent' }} >Bạn chưa có tài khoản ? Vui lòng <Text onPress={() => { api.navigate('signup') }} style={{ color: '#fff', fontWeight: 'bold', textDecorationLine: 'underline', backgroundColor: 'transparent' }}>ĐĂNG KÝ</Text> </Text>
                         </View>
                     </ScrollView>
                 </ImageBackground>

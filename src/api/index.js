@@ -1,4 +1,4 @@
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation';
 import { Dimensions } from 'react-native'
 let store = null
 let navigationState = null
@@ -7,6 +7,9 @@ var deviceHeight = Dimensions.get('window').height
 const api = {
     setStore: (newStore) => {
         store = newStore
+    },
+    getToken() {
+        return store.getState().userReducer.token
     },
     setNavigationState: (newNav) => {
         navigationState = newNav
@@ -43,7 +46,7 @@ const api = {
     },
     reset: (index, route) => {
         navigationState.dispatch(
-            NavigationActions.reset({
+            StackActions.reset({
                 index: index,
                 actions: [NavigationActions.navigate({ routeName: route })],
             })

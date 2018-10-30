@@ -1,7 +1,5 @@
 let initialState = {
-    token: {
-
-    },
+    token: "",
     user: {
 
     }
@@ -10,7 +8,6 @@ let initialState = {
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_USER_INFO':
-            alert('a')
             return Object.assign({}, state, {
                 user: action.user
             })
