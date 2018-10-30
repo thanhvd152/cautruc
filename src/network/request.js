@@ -3,9 +3,9 @@ import config from '../config'
 import api from '../api';
 
 let request = {
-    post: async (url, body, apiVersion) => {
+    req: async (url, body, apiVersion, method) => {
         let option = {
-            method: 'POST',
+            method,
             url: config.HOST + url,
             data: body,
             headers: {
@@ -16,6 +16,7 @@ let request = {
                 'Api-Version': apiVersion
             }
         }
+
         try {
             let response = await axios(option)
             console.log("dataPost=>", option, 'response=>', response)

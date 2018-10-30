@@ -3,6 +3,7 @@ package com.giatky;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SplashScreenReactPackage(),
             new PickerPackage(),
             new FIRMessagingPackage()
       );

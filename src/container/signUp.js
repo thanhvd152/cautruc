@@ -180,7 +180,7 @@ export default class SignUp extends Component {
                             onPress={this._openCamera}
                             activeOpacity={0.8}
                             style={{
-                                borderRadius: 100,
+                                borderRadius: api.getRealDeviceWidth() / 6,
                                 overflow: 'hidden',
                                 alignSelf: 'center',
                                 marginTop: 10,
@@ -189,7 +189,6 @@ export default class SignUp extends Component {
                             {this.state.avatar ? <Image style={{
                                 width: api.getRealDeviceWidth() / 3,
                                 height: api.getRealDeviceWidth() / 3,
-                                backgroundColor: 'green',
                             }} source={{ uri: this.state.avatar }} /> :
                                 <View
                                     style={{

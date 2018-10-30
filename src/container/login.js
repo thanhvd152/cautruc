@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Toast, Container, Header, Content, Thumbnail, Form, Item, Input, Label, Button, Text, View } from 'native-base';
-import { ImageBackground, StatusBar, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { ImageBackground, StatusBar, Image, TouchableOpacity, ScrollView, AsyncStorage } from 'react-native'
 import api from '../api';
 import { Color } from '../themes/color'
 import dataService from '../network/dataService';
+import SplashScreen from 'react-native-splash-screen'
 
 export default class Login extends Component {
     constructor(props) {
@@ -16,20 +17,29 @@ export default class Login extends Component {
     }
 
     componentDidMount() {
-
+        setTimeout(() => { SplashScreen.hide() }, 2000)
     }
 
 
+    async setStore(token) {
+        try {
+            await AsyncStorage.setItem('RFTK', token)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 
     async login() {
         if (this.state.userName.length == 0) return api.showMessage('Vui lòng nhập email')
         if (this.state.pass.length == 0) return api.showMessage('Vui lòng nhập mật khẩu')
         api.showLoading()
         let result = await dataService.signIn('public', this.state.userName, this.state.pass)
+        this.setStore(result.loginInfo.token)
         api.pop()
         if (result) {
             if (result.loginInfo.roleId.includes(2)) {
-                api.setToken(result.token)
+                api.setToken(result.loginInfo.token)
                 api.setUserInfo(result.loginInfo)
                 api.reset(0, 'home')
             } else {
@@ -80,7 +90,7 @@ export default class Login extends Component {
                                 <Input
                                     value={this.state.userName}
                                     onChangeText={(userName) => { this.setState({ userName }) }}
-                                    selectionColor={Color.colorSuccess}
+                                    selectionColor={'#fff'}
                                     placeholderTextColor='#dddddd'
                                     style={{
                                         textAlign: 'center',
@@ -101,7 +111,7 @@ export default class Login extends Component {
                                     secureTextEntry={true}
                                     value={this.state.pass}
                                     onChangeText={(pass) => { this.setState({ pass }) }}
-                                    selectionColor={Color.colorSuccess}
+                                    selectionColor={'#fff'}
                                     placeholderTextColor='#dddddd'
                                     style={{
                                         textAlign: 'center',
